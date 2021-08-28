@@ -86,14 +86,14 @@ func handler(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	log.Printf("Shoot: %v %v", shootto, shoot)
+	log.Printf("Command: %v Shoot: %v %v", resp, shootto, shoot)
 	fmt.Fprint(w, resp)
 }
 
 func playrandom(input ArenaUpdate) (response string) {
 
-	commands := []string{"F", "R", "L", "F", "F", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T"}
-	rand := rand2.Intn(15)
+	commands := []string{"F", "R", "L", "F"}
+	rand := rand2.Intn(4)
 	//log.Printf("Rand: %v %v", rand, commands[rand])
 	return commands[rand]
 }
