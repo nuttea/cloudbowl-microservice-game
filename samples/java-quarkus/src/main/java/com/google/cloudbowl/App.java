@@ -41,7 +41,7 @@ public class App {
     @Consumes(MediaType.APPLICATION_JSON)
     public String index(ArenaUpdate arenaUpdate) {
         System.out.println(arenaUpdate);
-        String[] commands = new String[]{"F", "R", "L", "T"};
+        String[] commands = new String[]{"F", "R", "L", "T", "T", "T", "T", "T", "T"};
         int i = new Random().nextInt(4);
         return commands[i];
     }
