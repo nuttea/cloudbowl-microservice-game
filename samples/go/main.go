@@ -22,6 +22,8 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, req *http.Request) {
+
+	/// Check HTTP Method
 	if req.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		fmt.Fprint(w, "only POST method supported")
@@ -43,9 +45,12 @@ func handler(w http.ResponseWriter, req *http.Request) {
 }
 
 func play(input ArenaUpdate) (response string) {
+
+	/// Extract current information
 	log.Printf("IN: %#v", input)
 
-	commands := []string{"F", "R", "L", "T", "T", "T", "T", "T", "T"}
+	/// Play some logic here
+	commands := []string{"F", "R", "L", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T"}
 	rand := rand2.Intn(4)
 	return commands[rand]
 }
