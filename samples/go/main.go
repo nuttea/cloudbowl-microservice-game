@@ -47,10 +47,11 @@ func handler(w http.ResponseWriter, req *http.Request) {
 func play(input ArenaUpdate) (response string) {
 
 	/// Extract current information
-	log.Printf("IN: %#v", input)
+	//log.Printf("IN: %#v", input)
+	log.Printf("IN: %#v", input.Arena.State)
 
 	/// Play some logic here
 	commands := []string{"F", "R", "L", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T"}
-	rand := rand2.Intn(4)
+	rand := rand2.Intn(15)
 	return commands[rand]
 }
