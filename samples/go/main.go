@@ -9,6 +9,8 @@ import (
 	"os"
 )
 
+var hitcount int
+
 func main() {
 	port := "8080"
 	if v := os.Getenv("PORT"); v != "" {
@@ -40,8 +42,6 @@ func handler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	resp := playrandom(v)
-
 	// Logic to override random command
 	var myx = v.Arena.State["https://cloudbowl-samples-java-quarkus-yngbkt2j3a-uc.a.run.app"].X
 	var myy = v.Arena.State["https://cloudbowl-samples-java-quarkus-yngbkt2j3a-uc.a.run.app"].Y
@@ -51,6 +51,8 @@ func handler(w http.ResponseWriter, req *http.Request) {
 	var diffy int
 	var shoot = false
 	var shootto string
+	var resp string
+
 	log.Printf("MyState: X %v, Y %v, Direction %v, WasHit %v \n", myx, myy, myd, myh)
 
 	for player, state := range v.Arena.State {
@@ -86,7 +88,18 @@ func handler(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	log.Printf("Command: %v Shoot: %v %v", resp, shootto, shoot)
+	if myh == false {
+		hitcount = 0
+	} else {
+		hitcount = hitcount + 1
+	}
+
+	if (shoot == false) || (hitcount > 2) {
+		resp = playrandom(v)
+		log.Printf("Random: true")
+	}
+
+	log.Printf("Command: %v Shoot: %v %v Hitcounts: %v", resp, shootto, shoot, hitcount)
 	fmt.Fprint(w, resp)
 }
 
