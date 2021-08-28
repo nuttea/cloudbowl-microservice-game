@@ -40,17 +40,53 @@ func handler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	resp := play(v)
+	resp := playrandom(v)
+
+	// Logic to override random command
+	var myx = v.Arena.State["https://bar.com"].X
+	var myy = v.Arena.State["https://bar.com"].Y
+	var myd = v.Arena.State["https://bar.com"].Direction
+	var myh = v.Arena.State["https://bar.com"].WasHit
+	var diffx int
+	var diffy int
+	var shoot = false
+	log.Printf("MyState: X %v, Y %v, Direction %v, WasHit %v \n", myx, myy, myd, myh)
+
+	for player, state := range v.Arena.State {
+		diffx = state.X - myx
+		diffy = state.Y - myy
+		log.Printf("Diff: Player %v X %v, Y %v", player, diffx, diffy)
+
+		switch myd {
+		case "S":
+			if (diffy > 0) && (diffy < 4) && (diffx == 0) {
+				shoot = true
+				resp = "T"
+			}
+		case "N":
+			if (diffy < 0) && (diffy > -4) && (diffx == 0) {
+				shoot = true
+				resp = "T"
+			}
+		case "E":
+			if (diffx > 0) && (diffx < 4) && (diffy == 0) {
+				shoot = true
+				resp = "T"
+			}
+		case "W":
+			if (diffx < 0) && (diffx > -4) && (diffy == 0) {
+				shoot = true
+				resp = "T"
+			}
+		}
+	}
+
+	log.Printf("Shoot: %v", shoot)
 	fmt.Fprint(w, resp)
 }
 
-func play(input ArenaUpdate) (response string) {
+func playrandom(input ArenaUpdate) (response string) {
 
-	/// Extract current information
-	//log.Printf("IN: %#v", input)
-	log.Printf("IN: %#v", input.Arena.State)
-
-	/// Play some logic here
 	commands := []string{"F", "R", "L", "F", "F", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T"}
 	rand := rand2.Intn(15)
 	log.Printf("Rand: %v %v", rand, commands[rand])
