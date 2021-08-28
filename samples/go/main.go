@@ -51,7 +51,8 @@ func play(input ArenaUpdate) (response string) {
 	log.Printf("IN: %#v", input.Arena.State)
 
 	/// Play some logic here
-	commands := []string{"F", "R", "L", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T"}
+	commands := []string{"F", "R", "L", "F", "F", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T"}
 	rand := rand2.Intn(15)
+	log.Printf("Rand: %v %v", rand, commands[rand])
 	return commands[rand]
 }
