@@ -43,45 +43,50 @@ func handler(w http.ResponseWriter, req *http.Request) {
 	resp := playrandom(v)
 
 	// Logic to override random command
-	var myx = v.Arena.State["https://bar.com"].X
-	var myy = v.Arena.State["https://bar.com"].Y
-	var myd = v.Arena.State["https://bar.com"].Direction
-	var myh = v.Arena.State["https://bar.com"].WasHit
+	var myx = v.Arena.State["https://cloudbowl-samples-java-quarkus-yngbkt2j3a-uc.a.run.app"].X
+	var myy = v.Arena.State["https://cloudbowl-samples-java-quarkus-yngbkt2j3a-uc.a.run.app"].Y
+	var myd = v.Arena.State["https://cloudbowl-samples-java-quarkus-yngbkt2j3a-uc.a.run.app"].Direction
+	var myh = v.Arena.State["https://cloudbowl-samples-java-quarkus-yngbkt2j3a-uc.a.run.app"].WasHit
 	var diffx int
 	var diffy int
 	var shoot = false
+	var shootto string
 	log.Printf("MyState: X %v, Y %v, Direction %v, WasHit %v \n", myx, myy, myd, myh)
 
 	for player, state := range v.Arena.State {
 		diffx = state.X - myx
 		diffy = state.Y - myy
-		log.Printf("Diff: Player %v X %v, Y %v", player, diffx, diffy)
+		//log.Printf("Diff: Player %v X %v, Y %v", player, diffx, diffy)
 
 		switch myd {
 		case "S":
 			if (diffy > 0) && (diffy < 4) && (diffx == 0) {
 				shoot = true
+				shootto = player
 				resp = "T"
 			}
 		case "N":
 			if (diffy < 0) && (diffy > -4) && (diffx == 0) {
 				shoot = true
+				shootto = player
 				resp = "T"
 			}
 		case "E":
 			if (diffx > 0) && (diffx < 4) && (diffy == 0) {
 				shoot = true
+				shootto = player
 				resp = "T"
 			}
 		case "W":
 			if (diffx < 0) && (diffx > -4) && (diffy == 0) {
 				shoot = true
+				shootto = player
 				resp = "T"
 			}
 		}
 	}
 
-	log.Printf("Shoot: %v", shoot)
+	log.Printf("Shoot: %v %v", shootto, shoot)
 	fmt.Fprint(w, resp)
 }
 
@@ -89,6 +94,6 @@ func playrandom(input ArenaUpdate) (response string) {
 
 	commands := []string{"F", "R", "L", "F", "F", "T", "T", "T", "T", "T", "T", "T", "T", "T", "T"}
 	rand := rand2.Intn(15)
-	log.Printf("Rand: %v %v", rand, commands[rand])
+	//log.Printf("Rand: %v %v", rand, commands[rand])
 	return commands[rand]
 }
