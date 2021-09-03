@@ -96,10 +96,10 @@ func handler(w http.ResponseWriter, req *http.Request) {
 
 	if (shoot == false) || (hitcount > 2) {
 		resp = playrandom(v)
-		log.Printf("Random: true")
+		//log.Printf("Random: true")
 	}
 
-	log.Printf("Command: %v Shoot: %v %v Hitcounts: %v", resp, shootto, shoot, hitcount)
+	//log.Printf("Command: %v Shoot: %v %v Hitcounts: %v", resp, shootto, shoot, hitcount)
 	fmt.Fprint(w, resp)
 }
 
