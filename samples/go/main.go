@@ -99,7 +99,7 @@ func handler(w http.ResponseWriter, req *http.Request) {
 		//log.Printf("Random: true")
 	}
 
-	//log.Printf("Command: %v Shoot: %v %v Hitcounts: %v", resp, shootto, shoot, hitcount)
+	log.Printf("Command: %v Shoot: %v %v Hitcounts: %v", resp, shootto, shoot, hitcount)
 	fmt.Fprint(w, resp)
 }
 
